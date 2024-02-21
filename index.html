@@ -41,71 +41,71 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function() {
-   const fileInput = document.getElementById('fileInput');
-   const canvas = document.getElementById('canvas');
-   const ctx = canvas.getContext('2d');
+        const fileInput = document.getElementById('fileInput');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
 
-   let image;
+        let image;
 
-   fileInput.addEventListener('change', function(e) {
-       const file = e.target.files[0];
-       const reader = new FileReader();
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
 
-       reader.onload = function(event) {
-           const img = new Image();
-           img.onload = function() {
-               canvas.width = img.width;
-               canvas.height = img.height;
-               ctx.drawImage(img, 0, 0);
-               image = img;
-           }
-           img.src = event.target.result;
-       }
-       reader.readAsDataURL(file);
-   });
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    image = img;
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
 
-   const canvasOffsetX = canvas.offsetLeft;
-   const canvasOffsetY = canvas.offsetTop;
+        const canvasOffsetX = canvas.offsetLeft;
+        const canvasOffsetY = canvas.offsetTop;
 
-   canvas.width = window.innerWidth - canvasOffsetX;
-   canvas.height = window.innerHeight - canvasOffsetY;
+        canvas.width = window.innerWidth - canvasOffsetX;
+        canvas.height = window.innerHeight - canvasOffsetY;
 
-   let lineWidth = 3;
-   let startX = 0;
-   let startY = 0;
-   let numClicks = 0;
+        let lineWidth = 3;
+        let startX = 0;
+        let startY = 0;
+        let numClicks = 0;
 
-   const draw = (e) => {
-       if (numClicks < 6) {
-           if (startX == 0 && startY == 0) {
-               startX = e.clientX - canvasOffsetX;
-               startY = e.clientY - canvasOffsetY;
-               numClicks++;
-               return;
-           }
+        const draw = (e) => {
+            if (numClicks < 6) {
+                if (startX == 0 && startY == 0) {
+                    startX = e.clientX - canvasOffsetX;
+                    startY = e.clientY - canvasOffsetY;
+                    numClicks++;
+                    return;
+                }
 
-           ctx.lineWidth = lineWidth;
-           ctx.lineCap = 'round';
+                ctx.lineWidth = lineWidth;
+                ctx.lineCap = 'round';
 
-           const x1 = startX;
-           const y1 = startY;
-           const x2 = e.clientX - canvasOffsetX;
-           const y2 = e.clientY - canvasOffsetY;
+                const x1 = startX;
+                const y1 = startY;
+                const x2 = e.clientX - canvasOffsetX;
+                const y2 = e.clientY - canvasOffsetY;
 
-           ctx.beginPath();
-           ctx.moveTo(x1, y1);
-           ctx.lineTo(x2, y2);
-           ctx.strokeStyle = 'red';
-           ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = 'red';
+                ctx.stroke();
 
-           startX = x2;
-           startY = y2;
-           numClicks++;
-       }
-   };
+                startX = x2;
+                startY = y2;
+                numClicks++;
+            }
+        };
 
-   canvas.addEventListener('click', draw);
-});
+        canvas.addEventListener('click', draw);
+    });
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
